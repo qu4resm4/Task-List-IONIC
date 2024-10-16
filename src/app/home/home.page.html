@@ -1,20 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Lista de Tarefas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Área para adicionar nova tarefa -->
+  <ion-item>
+    <ion-textarea placeholder="Digite sua nova tarefa..." [(ngModel)]="novaTarefa"></ion-textarea>
+  </ion-item>
+  <ion-button id="btnC" expand="block" (click)="tarefaEmEdicao ? salvarEdicao() : criarTarefa()">{{tarefaEmEdicao ? "Editar Tarefa" : "Criar Tarefa"}}</ion-button>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <!-- Lista de Tarefas -->
+  <ion-list *ngIf="tarefas">
+    <ion-item *ngFor="let tarefa of tarefas">
+      <ion-label>{{ tarefa.name }}</ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editarTarefa(tarefa)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="excluirTarefa(tarefa)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 </ion-content>

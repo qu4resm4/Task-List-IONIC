@@ -14,4 +14,7 @@
     <ion-input [(ngModel)]="password" type="password"></ion-input>
   </ion-item>
   <ion-button expand="full" (click)="register()">Cadastrar</ion-button>
-</ion-content>
+
+  <div class="login-link">
+    <ion-text>Já tem uma conta? <ion-router-link [routerLink]="['/login']">Volte para o Login</ion-router-link></ion-text>
+  </div>

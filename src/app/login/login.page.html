@@ -17,6 +17,10 @@
       <ion-input [(ngModel)]="password" type="password"></ion-input>
     </ion-item>
     <ion-button expand="full" (click)="login()">Login</ion-button>
+    
+    <div class="register-link">
+      <ion-text>Não tem uma conta? <ion-router-link [routerLink]="['/register']">Cadastre-se aqui</ion-router-link></ion-text>
+    </div>
   </ng-container>
 
   <ng-template #loggedInTemplate>
@@ -24,7 +28,6 @@
       <ion-text color="success">
         <h2>Conectado com sucesso</h2>
       </ion-text>
-      <ion-button expand="full" color="danger" (click)="logout()">Sair</ion-button>
     </div>
   </ng-template>
 

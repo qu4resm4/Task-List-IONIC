@@ -9,17 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  email: string = '';
-  password: string = '';
-  isAuthenticated: boolean = false;
+  email: string = '';   
+  password: string = ''; 
+  isAuthenticated: boolean = false; 
 
   constructor(
-    private afAuth: AngularFireAuth,
-    private toastController: ToastController,
-    private loadingController: LoadingController,
-    private router: Router // Injetando o Router
+    private afAuth: AngularFireAuth, 
+    private toastController: ToastController, 
+    private loadingController: LoadingController, 
+    private router: Router 
   ) {}
 
+  // Função de login
   async login() {
     const loading = await this.loadingController.create({
       message: 'Carregando...',
@@ -27,30 +28,32 @@ export class LoginPage {
     await loading.present();
 
     try {
-      const user = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
-      await loading.dismiss();
-      this.isAuthenticated = true;
-      this.showToast('LOGIN EFETUADO COM SUCESSO');
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
+      await loading.dismiss();  
+      this.isAuthenticated = true; 
+      this.showToast('Login bem sucedido'); 
 
-      // Redireciona para a página HomePage após login bem-sucedido
+      // Redireciona pra página Home
       this.router.navigate(['/home']); 
 
     } catch (error) {
-      await loading.dismiss();
-      this.showToast('E-MAIL OU SENHA INCORRETOS');
+      await loading.dismiss();  
+      this.showToast('E-mail ou senha incorretos.'); 
     }
   }
 
+  // Função para logout
   async logout() {
     await this.afAuth.signOut();
-    this.isAuthenticated = false;
-    this.showToast('DESCONECTADOS COM SUCESSO');
+    this.isAuthenticated = false;  
+    this.showToast('Desconectado com sucesso!');
   }
 
+  
   async showToast(message: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 2000
+      duration: 2000 
     });
     toast.present();
   }

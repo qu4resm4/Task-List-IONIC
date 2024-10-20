@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="!isAuthenticated; else loggedInTemplate">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input [(ngModel)]="password" type="password"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="login()">Login</ion-button>
+  </ng-container>
+
+  <ng-template #loggedInTemplate>
+    <div class="message-container">
+      <ion-text color="success">
+        <h2>Conectado com sucesso</h2>
+      </ion-text>
+      <ion-button expand="full" color="danger" (click)="logout()">Sair</ion-button>
+    </div>
+  </ng-template>
+
+  <ion-loading></ion-loading>
+</ion-content>

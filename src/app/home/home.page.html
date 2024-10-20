@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Lista de Tarefas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Logout</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -9,7 +12,9 @@
   <ion-item>
     <ion-textarea placeholder="Digite sua nova tarefa..." [(ngModel)]="novaTarefa"></ion-textarea>
   </ion-item>
-  <ion-button id="btnC" expand="block" (click)="tarefaEmEdicao ? salvarEdicao() : criarTarefa()">{{tarefaEmEdicao ? "Editar Tarefa" : "Criar Tarefa"}}</ion-button>
+  <ion-button id="btnC" expand="block" (click)="tarefaEmEdicao ? salvarEdicao() : criarTarefa()">
+    {{tarefaEmEdicao ? "Editar Tarefa" : "Criar Tarefa"}}
+  </ion-button>
 
   <!-- Lista de Tarefas -->
   <ion-list *ngIf="tarefas">

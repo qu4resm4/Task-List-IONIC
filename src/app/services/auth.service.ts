@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
-  // Método de logout usando Firebase
+  // Logout usando Firebase
   async logout() {
     try {
       await this.afAuth.signOut(); 

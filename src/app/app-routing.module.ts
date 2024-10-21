@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   
   {
-    path: '**',  // Captura qualquer rota inválida e redireciona para login
+    path: '**',  // Captura qq rota inválida e direciona para o login
     redirectTo: 'login',
     pathMatch: 'full'
   },

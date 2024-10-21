@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service'; // Importando o AuthService
-import { AlertController } from '@ionic/angular'; // Importando para exibir alertas
+import { AuthService } from '../services/auth.service'; 
+import { AlertController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-forgot-password',

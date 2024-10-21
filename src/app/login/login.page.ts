@@ -12,7 +12,7 @@ export class LoginPage {
   email: string = '';   
   password: string = ''; 
   isAuthenticated: boolean = false; 
-  userId: string | null = null; // Armazena o UID do usuário
+  userId: string | null = null; // ARMAZENA O UID DO USUARIO, SE LIGA AQUI!
 
   constructor(
     private afAuth: AngularFireAuth, 
@@ -48,12 +48,12 @@ export class LoginPage {
     }
   }
 
-   // Função para logout
+   // Função pra logout
    async logout() {
     await this.afAuth.signOut();
     this.showToast('Desconectado com sucesso!');
 
-    // Redireciona para a tela de login
+    // Redireciona pra a tela de login
     this.router.navigate(['/login']);
   }
 

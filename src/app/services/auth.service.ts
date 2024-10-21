@@ -20,4 +20,16 @@ export class AuthService {
       console.error("Erro ao desconectar: ", error);
     }
   }
+
+   resetPassword(email: string): Promise<void> {
+    return this.afAuth.sendPasswordResetEmail(email)
+      .then(() => {
+        console.log('E-mail de redefinição enviado.');
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar e-mail de redefinição: ', error);
+        throw error;
+      });
+  }
 }
+

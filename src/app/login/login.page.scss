@@ -11,3 +11,13 @@
   .forgot-password-link {
     margin-top: 5px;
   }
+
+  ion-button.login-btn {
+    border-radius: 20px;  /* Borda arredondada */
+    --border-radius: 20px;  /* Borda arredondada no Ionic */
+    background-color: #5387da;  /* Cor de fundo azul */
+    color: rgba(248, 245, 245, 0.945);  /* Cor do texto */
+    font-size: 14px;  /* Tamanho da fonte */
+    padding: 10px 20px;  /* Espaçamento interno */
+    margin-top: 300px;
+}

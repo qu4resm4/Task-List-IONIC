@@ -30,11 +30,11 @@ export class RegisterPage {
       await loading.dismiss();
       this.showToast('Cadastro efetuado com sucesso!');
       
-      // Redireciona para a página de login
+      // Redireciona pro login
       this.router.navigate(['/login']);
     } catch (error) {
       await loading.dismiss();
-      this.showToast('Erro no cadastro. Verifique os dados e tente novamente.');
+      this.showToast('Erro no cadastro. Utilize caracteres maiúsculos, minúsculos, especiais e numéricos.');
     }
   }
 

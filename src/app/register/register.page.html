@@ -13,5 +13,8 @@
     <ion-label position="floating">Senha</ion-label>
     <ion-input [(ngModel)]="password" type="password"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="register()">Cadastrar</ion-button>
-</ion-content>
+  <ion-button class="register-btn" expand="full" (click)="register()">Cadastrar</ion-button>
+
+  <div class="login-link">
+    <ion-text>Já tem uma conta? <ion-router-link [routerLink]="['/login']">Volte para o Login</ion-router-link></ion-text>
+  </div>

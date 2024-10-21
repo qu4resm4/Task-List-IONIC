@@ -16,15 +16,22 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input [(ngModel)]="password" type="password"></ion-input>
     </ion-item>
-    <ion-button expand="full" (click)="login()">Login</ion-button>
+    <ion-button class="login-btn" expand="full" (click)="login()">Login</ion-button>
+    
+    <div class="register-link">
+      <ion-text>Não tem uma conta? <ion-router-link [routerLink]="['/register']">Criar aqui</ion-router-link></ion-text>
+    </div>
+
+    <div class="forgot-password-link" style="text-align: center; margin-top: 10px;">
+      <ion-text>Esqueceu a senha? <ion-router-link [routerLink]="['/forgot-password']">Redefinir senha</ion-router-link></ion-text>
+    </div>
   </ng-container>
 
   <ng-template #loggedInTemplate>
     <div class="message-container">
       <ion-text color="success">
-        <h2>Conectado com sucesso</h2>
+        <h2>Desconectado com sucesso</h2>
       </ion-text>
-      <ion-button expand="full" color="danger" (click)="logout()">Sair</ion-button>
     </div>
   </ng-template>
 

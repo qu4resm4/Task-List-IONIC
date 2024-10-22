@@ -6,7 +6,17 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  userId: string | null = null;
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
+
+  setUserID(i: string) {
+    this.userId = i;
+    console.log("foi setado")
+  }
+
+  getUserID(){
+    return this.userId;
+  }
 
   // Logout usando Firebase
   async logout() {

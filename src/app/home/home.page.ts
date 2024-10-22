@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthService } from '../services/auth.service'; 
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../services/auth.service';
+import { LoginPage } from '../login/login.page'
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -13,26 +13,27 @@ export class HomePage {
   novaTarefa: string = '';
   tarefas: any = null;
   tarefaEmEdicao: any = null;
+  idUser: string | null = 'initialized_fail';
 
   constructor(private db: StorageService, private authService: AuthService) {} // Injeta o AuthService
 
   // Função para exibir as tarefas
   async exibirTarefas() {
     this.tarefas = null;
-    this.tarefas = await this.db.getTarefas();
+    this.tarefas = await this.db.getTarefas(this.idUser || '');
     console.log('EXIBINDO');
   }
 
   // Função para criar uma nova tarefa
   async criarTarefa() {
     if (this.novaTarefa.trim()) {
-      const id = uuidv4();
+      const idTarefa = uuidv4();
       const task = {
         name: this.novaTarefa,
-        activate: true,
+        activate: true
       };
 
-      await this.db.addTarefa(id, task);
+      await this.db.addTarefa(this.idUser || '', idTarefa, task);
       this.novaTarefa = '';
       this.exibirTarefas();
     }
@@ -53,7 +54,7 @@ export class HomePage {
         activate: this.tarefaEmEdicao.activate,
       };
 
-      await this.db.updateTarefa(id, task);
+      await this.db.updateTarefa(this.idUser || '', id, task);
       this.novaTarefa = '';
       this.tarefaEmEdicao = null;
       this.exibirTarefas();
@@ -62,7 +63,7 @@ export class HomePage {
 
   // Função para excluir uma tarefa
   async excluirTarefa(tarefa: any) {
-    await this.db.removeTarefa(tarefa.id);
+    await this.db.removeTarefa(this.idUser || '', tarefa.id);
     this.exibirTarefas();
   }
 
@@ -71,8 +72,13 @@ export class HomePage {
     await this.authService.logout(); // Chama o serviço de logout
   }
 
+  async getUserId() {
+    this.idUser = await this.authService.getUserID();
+  }
+
   // Função inicial para exibir as tarefas ao carregar a página
   ngOnInit() {
+    this.getUserId();
     this.exibirTarefas();
   }
 }

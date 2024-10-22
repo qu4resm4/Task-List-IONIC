@@ -1,7 +1,8 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';  
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,19 @@ export class LoginPage {
   email: string = '';   
   password: string = ''; 
   isAuthenticated: boolean = false; 
-  userId: string | null = null; // ARMAZENA O UID DO USUARIO, SE LIGA AQUI!
+  userId: string = '';
 
   constructor(
+    private auth: AuthService,
     private afAuth: AngularFireAuth, 
     private toastController: ToastController, 
     private loadingController: LoadingController, 
     private router: Router 
   ) {}
+
+  async getIdUser() {
+     return await this.userId;
+  }
 
   // Função de login
   async login() {
@@ -34,7 +40,11 @@ export class LoginPage {
       this.isAuthenticated = true; 
       
       // Obtém o UID do usuário
-      this.userId = userCredential.user?.uid || null;
+      this.userId = await userCredential.user?.uid || 'FALHA';
+      if(this.userId == 'FALHA') {
+        this.showToast('Falha na conexão, conecte-se novamente a conta');
+      }
+      await this.auth.setUserID(this.userId);
       console.log('UID do usuário:', this.userId);
 
       this.showToast('Login bem sucedido'); 

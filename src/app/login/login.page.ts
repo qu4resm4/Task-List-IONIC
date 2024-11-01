@@ -3,6 +3,7 @@ import { ToastController, LoadingController } from '@ionic/angular';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginPage {
     private afAuth: AngularFireAuth, 
     private toastController: ToastController, 
     private loadingController: LoadingController, 
-    private router: Router 
+    private router: Router,
+    private setHome: HomePage
   ) {}
 
   async getIdUser() {
@@ -49,8 +51,13 @@ export class LoginPage {
 
       this.showToast('Login bem sucedido'); 
 
+      //Associa o ID do usuário na interface da aplicação
+      await this.setHome.getUserId();
+      //Associa as tarefas já guardadas na interface da aplicação
+      await this.setHome.exibirTarefas();
+
       // Redireciona pra página Home
-      this.router.navigate(['/home']); 
+      await this.router.navigate(['/home']); 
 
     } catch (error) {
       await loading.dismiss();  

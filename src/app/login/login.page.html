@@ -7,7 +7,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="!isAuthenticated; else loggedInTemplate">
     <ion-item>
       <ion-label position="floating">Email</ion-label>
       <ion-input [(ngModel)]="email" type="email"></ion-input>
@@ -25,15 +24,5 @@
     <div class="forgot-password-link" style="text-align: center; margin-top: 10px;">
       <ion-text>Esqueceu a senha? <ion-router-link [routerLink]="['/forgot-password']">Redefinir senha</ion-router-link></ion-text>
     </div>
-  </ng-container>
-
-  <ng-template #loggedInTemplate>
-    <div class="message-container">
-      <ion-text color="success">
-        <h2>Desconectado com sucesso</h2>
-      </ion-text>
-    </div>
-  </ng-template>
-
   <ion-loading></ion-loading>
 </ion-content>

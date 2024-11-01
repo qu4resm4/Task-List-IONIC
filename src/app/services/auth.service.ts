@@ -22,7 +22,8 @@ export class AuthService {
   // Logout usando Firebase
   async logout() {
     try {
-      await this.afAuth.signOut(); 
+      await this.afAuth.signOut();
+      this.userId = null;
       console.log("Usuário desconectado");
       
       // Após o logout, redireciona pra página login

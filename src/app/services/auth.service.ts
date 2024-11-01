@@ -11,7 +11,8 @@ export class AuthService {
 
   setUserID(i: string) {
     this.userId = i;
-    console.log("foi setado")
+    console.log('UID no Auth: ' + i);
+    console.log('userID variavel: ' + this.userId);
   }
 
   getUserID(){

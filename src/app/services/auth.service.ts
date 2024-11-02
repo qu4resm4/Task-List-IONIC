@@ -6,12 +6,24 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  userId: string | null = null;
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
+
+  setUserID(i: string) {
+    this.userId = i;
+    console.log('UID no Auth: ' + i);
+    console.log('userID variavel: ' + this.userId);
+  }
+
+  getUserID(){
+    return this.userId;
+  }
 
   // Logout usando Firebase
   async logout() {
     try {
-      await this.afAuth.signOut(); 
+      await this.afAuth.signOut();
+      this.userId = null;
       console.log("Usuário desconectado");
       
       // Após o logout, redireciona pra página login

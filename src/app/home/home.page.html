@@ -11,7 +11,7 @@
 <ion-content class="ion-padding">
   <!-- Área para adicionar nova tarefa -->
   <ion-item>
-    <ion-textarea placeholder="Digite sua nova tarefa..." [(ngModel)]="novaTarefa"></ion-textarea>
+    <ion-textarea placeholder="Digite sua nova tarefa..." [(ngModel)]="inputTarefa"></ion-textarea>
   </ion-item>
   <ion-button id="btnC" expand="block" (click)="tarefaEmEdicao ? salvarEdicao() : criarTarefa()">
     {{tarefaEmEdicao ? "Editar Tarefa" : "Criar Tarefa"}}

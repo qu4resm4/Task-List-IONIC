@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StorageService } from '../services/storage/storage.service';
-import { AuthService } from '../services/auth.service'; 
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -10,30 +10,35 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  novaTarefa: string = '';
+  inputTarefa: string = '';
   tarefas: any = null;
   tarefaEmEdicao: any = null;
+  idUser: string | null = 'initialized_fail';
 
-  constructor(private db: StorageService, private authService: AuthService) {} // Injeta o AuthService
+  constructor(
+    private db: StorageService,
+    private authService: AuthService,
+    private router: Router
+  ) {} // Injeta o AuthService
 
   // Função para exibir as tarefas
   async exibirTarefas() {
     this.tarefas = null;
-    this.tarefas = await this.db.getTarefas();
-    console.log('EXIBINDO');
+    this.tarefas = await this.db.getTarefas(this.idUser || '');
+    console.log('EXIBINDO' + this.tarefas);
   }
 
   // Função para criar uma nova tarefa
   async criarTarefa() {
-    if (this.novaTarefa.trim()) {
-      const id = uuidv4();
+    if (this.inputTarefa.trim()) {
+      const idTarefa = uuidv4();
       const task = {
-        name: this.novaTarefa,
-        activate: true,
+        name: this.inputTarefa,
+        activate: true
       };
 
-      await this.db.addTarefa(id, task);
-      this.novaTarefa = '';
+      await this.db.addTarefa(this.idUser || '', idTarefa, task);
+      this.inputTarefa = '';
       this.exibirTarefas();
     }
   }
@@ -41,20 +46,20 @@ export class HomePage {
   // Função para editar uma tarefa
   editarTarefa(tarefa: any) {
     this.tarefaEmEdicao = tarefa;
-    this.novaTarefa = tarefa.name;
+    this.inputTarefa = tarefa.name;
   }
 
   // Função para salvar as edições feitas em uma tarefa
   async salvarEdicao() {
-    if (this.novaTarefa.trim()) {
+    if (this.inputTarefa.trim()) {
       const id = this.tarefaEmEdicao.id;
       const task = {
-        name: this.novaTarefa,
+        name: this.inputTarefa,
         activate: this.tarefaEmEdicao.activate,
       };
 
-      await this.db.updateTarefa(id, task);
-      this.novaTarefa = '';
+      await this.db.updateTarefa(this.idUser || '', id, task);
+      this.inputTarefa = '';
       this.tarefaEmEdicao = null;
       this.exibirTarefas();
     }
@@ -62,7 +67,7 @@ export class HomePage {
 
   // Função para excluir uma tarefa
   async excluirTarefa(tarefa: any) {
-    await this.db.removeTarefa(tarefa.id);
+    await this.db.removeTarefa(this.idUser || '', tarefa.id);
     this.exibirTarefas();
   }
 
@@ -71,8 +76,21 @@ export class HomePage {
     await this.authService.logout(); // Chama o serviço de logout
   }
 
+  async getUserId() {
+    this.idUser = await this.authService.getUserID();
+    console.log('UID no Home: ' + this.idUser);
+  }
+
+  async init() {
+    await this.getUserId();
+    await this.exibirTarefas();
+  }
+
   // Função inicial para exibir as tarefas ao carregar a página
   ngOnInit() {
-    this.exibirTarefas();
+    if(this.authService.getUserID() == null){
+      this.router.navigate(['/login']); 
+    }
+    this.init();
   }
 }

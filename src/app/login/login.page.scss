@@ -12,9 +12,9 @@
     margin-top: 5px;
   }
 
-  ion-button{
-    border-radius: 60px;
-    background-color: #2053a5;  
+  ion-button.login-btn {
+    border-radius: 20px;  
+    --border-radius: 20px;
     color: rgba(248, 245, 245, 0.945);  
     font-size: 14px;  
     padding: 10px 20px;  
